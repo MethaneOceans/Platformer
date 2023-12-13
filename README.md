@@ -20,3 +20,8 @@ This xml file is generated using Tiled and the tileset used is the image file in
 
 ## Some ideas
 - Since you can check for collisions in a list of gameobjects you can exclude some objects to "phase through"
+
+## Credits
+- GXPEngine: Saxion teachers
+- Sprites: [Basic platformer tileset](https://mynastudios.itch.io/basic-platformer-tileset) by [Myna Studios](https://mynastudios.itch.io/)
+- Programming: Tygo aka "Methane Oceans"

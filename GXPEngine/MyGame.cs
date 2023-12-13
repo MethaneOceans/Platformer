@@ -28,7 +28,7 @@ public class MyGame : Game {
 		// Create a canvas that connects to the context of MyGame
 		EasyDraw canvas = new EasyDraw(wwidth, wheight);
 		canvas.Clear(Color.DeepSkyBlue);
-		canvas.scale = 2;
+		canvas.scale = 3;
 		// Add the canvas to the engine to display it:
 		AddChild(canvas);
 
@@ -38,7 +38,7 @@ public class MyGame : Game {
 		//		Load level and initiate associated objects
 		// ==========================================================================================================================================
 
-		TiledLoader level0 = new TiledLoader(@"..\..\..\TiledFiles\level0.xml", canvas);
+		TiledLoader level0 = new TiledLoader(@"level0.xml", canvas);
 		level0.autoInstance = true;
 		level0.addColliders = true;
 
