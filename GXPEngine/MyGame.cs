@@ -10,66 +10,86 @@ public class MyGame : Game {
 	private static readonly int wwidth = 1280;
 	private static readonly int wheight = 720;
 
-    private List<Layer> terrainLayers = new List<Layer>();
-    private List<Layer> decorationLayers = new List<Layer>();
-    private Layer playerLayer;
-    private List<Layer> otherLayers = new List<Layer>();
+	// Store layer IDs for debugging purposes
+	private List<int> terrainLayers = new List<int>();
+	private List<int> decorationLayers = new List<int>();
+	private int playerLayer;
+	private List<int> otherLayers = new List<int>();
 
-    public MyGame() : base(wwidth, wheight, false, pPixelArt:true)     // Create a window
+	bool includeDecoration = true;
+	bool includeOtherLayers = false;
+
+	public MyGame() : base(wwidth, wheight, false, pPixelArt:true)     // Create a window
 	{
-        // ==========================================================================================================================================
-		// 
+		// ==========================================================================================================================================
 		//		Initialize canvas
-		// 
-        // ==========================================================================================================================================
-        
+		// ==========================================================================================================================================
+		
 		// Create a canvas that connects to the context of MyGame
-        EasyDraw canvas = new EasyDraw(wwidth, wheight);
+		EasyDraw canvas = new EasyDraw(wwidth, wheight);
 		canvas.Clear(Color.DeepSkyBlue);
+		canvas.scale = 2;
 		// Add the canvas to the engine to display it:
 		AddChild(canvas);
 
 
 
 		// ==========================================================================================================================================
-		//
 		//		Load level and initiate associated objects
-		//
 		// ==========================================================================================================================================
 
-		TiledLoader level0 = new TiledLoader(@"..\..\..\TiledFiles\level0.xml");
+		TiledLoader level0 = new TiledLoader(@"..\..\..\TiledFiles\level0.xml", canvas);
 		level0.autoInstance = true;
 		level0.addColliders = true;
 
 		Layer[] levelLayers = level0.map.Layers;
 
-		
-
+		// Seperate map layers in collections
+		int id;
 		for (int i = 0; i < levelLayers.Length; i++)
 		{
-			switch (levelLayers[i].GetStringProperty("Class", null))
+			id = i;
+			switch (levelLayers[i].Name)
 			{
 				case "terrain":
-					terrainLayers.Add(levelLayers[i]);
+					terrainLayers.Add(id);
 					break;
 
 				case "decoration":
-					decorationLayers.Add(levelLayers[i]);
+					decorationLayers.Add(id);
 					break;
 
 				case "player":
-					playerLayer = levelLayers[i];
+					playerLayer = id;
 					break;
 
 				default:
-					otherLayers.Add(levelLayers[i]);
+					otherLayers.Add(id);
 					break;
 			}
 		}
-    }
 
-    // For every game object, Update is called every frame, by the engine:
-    void Update() {
+		level0.LoadTileLayers(terrainLayers.ToArray());
+		Console.WriteLine($"Loaded terrain layers (Amount: {terrainLayers.Count})");
+		if (includeDecoration)
+		{
+			level0.addColliders = false;
+			level0.LoadTileLayers(decorationLayers.ToArray());
+			Console.WriteLine($"Loaded decoration layers (Amount: {decorationLayers.Count})");
+		}
+		if (includeOtherLayers)
+		{
+			Console.WriteLine($"Loaded miscellaneous layers (Amount: {otherLayers.Count})");
+			level0.LoadTileLayers(otherLayers.ToArray());
+		}
+
+		
+
+		level0.LoadObjectGroups(playerLayer);
+	}
+
+	// For every game object, Update is called every frame, by the engine:
+	void Update() {
 		// Empty
 	}
 
