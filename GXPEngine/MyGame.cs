@@ -3,89 +3,30 @@ using GXPEngine;                                // GXPEngine contains the engine
 using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
 using TiledMapParser;
 using System.Collections.Generic;
+using GXPEngine.OpenGL;
+using System.Drawing.Text;
 
 public class MyGame : Game {
 	// Support for scaling window not implemented
 	// TODO: Block user from scaling the window | Reason: X/Y scale breaks after resize
+	// TODO: Make game fullscreen
 	private static readonly int wwidth = 1280;
 	private static readonly int wheight = 720;
 
-	// Store layer IDs for debugging purposes
-	private List<int> terrainLayers = new List<int>();
-	private List<int> decorationLayers = new List<int>();
-	private int playerLayer;
-	private List<int> otherLayers = new List<int>();
-
-	bool includeDecoration = true;
-	bool includeOtherLayers = false;
+	private LevelLoader levelLoader;
 
 	public MyGame() : base(wwidth, wheight, false, pPixelArt:true)     // Create a window
 	{
-		// ==========================================================================================================================================
-		//		Initialize canvas
-		// ==========================================================================================================================================
-		
-		// Create a canvas that connects to the context of MyGame
-		EasyDraw canvas = new EasyDraw(wwidth, wheight);
-		canvas.Clear(Color.DeepSkyBlue);
-		canvas.scale = 3;
-		// Add the canvas to the engine to display it:
-		AddChild(canvas);
+		// Sets clear color for background
+		GL.ClearColor(Color.DeepSkyBlue.R, Color.DeepSkyBlue.G, Color.DeepSkyBlue.B, 255);
 
+		// Sprites are too small so scale up the game
+		scale = 3;
 
-
-		// ==========================================================================================================================================
-		//		Load level and initiate associated objects
-		// ==========================================================================================================================================
-
-		TiledLoader level0 = new TiledLoader(@"level0.xml", canvas);
-		level0.autoInstance = true;
-		level0.addColliders = true;
-
-		Layer[] levelLayers = level0.map.Layers;
-
-		// Seperate map layers in collections
-		int id;
-		for (int i = 0; i < levelLayers.Length; i++)
-		{
-			id = i;
-			switch (levelLayers[i].Name)
-			{
-				case "terrain":
-					terrainLayers.Add(id);
-					break;
-
-				case "decoration":
-					decorationLayers.Add(id);
-					break;
-
-				case "player":
-					playerLayer = id;
-					break;
-
-				default:
-					otherLayers.Add(id);
-					break;
-			}
-		}
-
-		level0.LoadTileLayers(terrainLayers.ToArray());
-		Console.WriteLine($"Loaded terrain layers (Amount: {terrainLayers.Count})");
-		if (includeDecoration)
-		{
-			level0.addColliders = false;
-			level0.LoadTileLayers(decorationLayers.ToArray());
-			Console.WriteLine($"Loaded decoration layers (Amount: {decorationLayers.Count})");
-		}
-		if (includeOtherLayers)
-		{
-			Console.WriteLine($"Loaded miscellaneous layers (Amount: {otherLayers.Count})");
-			level0.LoadTileLayers(otherLayers.ToArray());
-		}
-
-		
-
-		level0.LoadObjectGroups(playerLayer);
+		levelLoader = new LevelLoader();
+		AddChild(levelLoader);
+		levelLoader.ListLevels();
+		levelLoader.LoadLevel();
 	}
 
 	// For every game object, Update is called every frame, by the engine:

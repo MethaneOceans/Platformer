@@ -45,6 +45,8 @@
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="LevelLoader.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -89,16 +91,9 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
-    <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\TiledFiles\level0.xml">
-      <Link>level0.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\TiledFiles\tilemap_packed.png">
-      <Link>tilemap_packed.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY $(SolutionDir)Levels $(OutputDir)Levels\
+EXIT /b 0</PostBuildEvent>
+  </PropertyGroup>
 </Project>
