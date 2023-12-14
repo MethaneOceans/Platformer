@@ -12,11 +12,9 @@ namespace GXPEngine
     {
         Level currentLevel;
         List<string> levels = new List<string>();
-        public LevelLoader()
-        {
-            currentLevel = new Level();
-            AddChild(currentLevel);
-        }
+        bool paused = true;
+
+        public LevelLoader() { }
 
         // List all levels in level folder so user can pick one
         public void ListLevels()
@@ -41,6 +39,7 @@ namespace GXPEngine
             {
                 int level = int.Parse(Console.ReadLine());
                 LoadLevel(levels.ElementAt(level));
+
             }
             catch
             {
@@ -53,10 +52,14 @@ namespace GXPEngine
         public void LoadLevel(string path)
         {
             currentLevel = new Level();
-            TiledLoader loader = new TiledLoader(path, this);
+            TiledLoader loader = new TiledLoader(path, currentLevel);
+            AddChild(currentLevel);
             loader.LoadTileLayers();
+            loader.autoInstance = true;
+            loader.LoadObjectGroups();
 
             Console.WriteLine("Level loaded");
         }
+
     }
 }

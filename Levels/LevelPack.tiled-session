@@ -7,6 +7,9 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "#tilemap_packed": {
+            "scaleInDock": 1
+        }
     },
     "last.imagePath": "D:/Projects/Platformer/Levels",
     "map.height": 30,
