@@ -64,11 +64,6 @@ public class Player : Actor
         // If there is no collision then there's no need to do this
         if (collision != null)
         {
-            // If player hit
-            if (collision.normal.y < 0)
-            {
-                canJump = true;
-            }
             if (collision.normal.y != 0.0f)
             {
                 vY = 0.0f;
@@ -83,7 +78,7 @@ public class Player : Actor
                 MoveUntilCollision(vX, vY, theWorld);
             }
             
-            //canJump = true;
+            canJump = true;
         }
 
         collision = null;
