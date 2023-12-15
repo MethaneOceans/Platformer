@@ -73,7 +73,7 @@ public class Player : Actor
             {
                 vY = 0.0f;
                 collision.normal.y = 0;
-                vX = 0.95f * vX;
+                vX = 0.90f * vX;
                 MoveUntilCollision(vX, vY, theWorld);
             }
             else if (collision.normal.x != 0.0f)

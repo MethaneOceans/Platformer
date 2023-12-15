@@ -285,7 +285,7 @@ namespace TiledMapParser
 		override public string ToString() {
 			string output = " Layer name: " + Name;
 			output += "Properties:\n"+propertyList.ToString();
-			output += "Data:" + Data.ToString ();
+			output += "Data:" + Data.ToString();
 			return output;
 		}
 

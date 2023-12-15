@@ -19,7 +19,7 @@ namespace GXPEngine
         // List all levels in level folder so user can pick one
         public void ListLevels()
         {
-            levels = Directory.EnumerateFiles(@"Levels", "*.xml").ToList();
+            levels = Directory.EnumerateFiles(@"..\..\..\Levels", "*.xml").ToList();
             Console.WriteLine("Available levels");
             Console.WriteLine("===============================================");
             int i = 0;
@@ -51,11 +51,20 @@ namespace GXPEngine
         // Load level automatically
         public void LoadLevel(string path)
         {
+            // Create level object
             currentLevel = new Level();
             TiledLoader loader = new TiledLoader(path, currentLevel);
             AddChild(currentLevel);
-            loader.LoadTileLayers();
+
+            // TODO: Filter layers to prevent decoration from getting hitboxes
+            for (int i = 0; i < loader.map.Layers.Length; i++)
+            {
+                loader.addColliders = loader.map.Layers[i].GetBoolProperty("enableCollisions", false);
+                loader.LoadTileLayers(new int[]{i});
+            }
+            
             loader.autoInstance = true;
+            loader.addColliders = true;
             loader.LoadObjectGroups();
 
             Console.WriteLine("Level loaded");
