@@ -2,9 +2,8 @@
 {
     public class Level : GameObject
     {
-        public Level()
-        {
-
-        }
+        // TODO: Add level states
+        public Level() : base() { }
+        // TODO: Add destructor and stuff to handle level ending/reset
     }
 }

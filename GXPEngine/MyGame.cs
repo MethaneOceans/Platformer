@@ -10,8 +10,8 @@ public class MyGame : Game {
 	// Support for scaling window not implemented
 	// TODO: Block user from scaling the window | Reason: X/Y scale breaks after resize
 	// TODO: Make game fullscreen
-	private static readonly int wwidth = 1280;
-	private static readonly int wheight = 720;
+	private static readonly int wwidth = 1920;
+	private static readonly int wheight = 1080;
 
 	private LevelLoader levelLoader;
 
@@ -32,7 +32,6 @@ public class MyGame : Game {
 	// For every game object, Update is called every frame, by the engine:
 	void Update() {
 		// Empty
-		targetFps = 0;
 	}
 
 	static void Main()                          // Main() is the first method that's called when the program is run

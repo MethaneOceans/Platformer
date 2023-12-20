@@ -3,12 +3,24 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level0.xml",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "#tilemap_packed": {
+            "scaleInDock": 1
+        },
+        "level0.xml": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 178.5,
+                "y": 151.5
+            }
+        },
+        "level0.xml#tilemap_packed": {
             "scaleInDock": 1
         }
     },
@@ -18,9 +30,11 @@
     "map.tileWidth": 16,
     "map.width": 60,
     "openFiles": [
+        "level0.xml"
     ],
     "project": "LevelPack.tiled-project",
     "recentFiles": [
+        "level0.xml"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
